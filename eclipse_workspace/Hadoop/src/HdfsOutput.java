@@ -22,8 +22,8 @@ public class HdfsOutput {
 		// TODO Auto-generated method stub
 		FileSystem fs = null;
 		String fsUri = "hdfs://localhost:8019";
-		String path = "/home/hadoop/working_dir/hdfs_data/input_data/praktikum/movies.dat";
-		Path p = new Path(path);
+		String path = "/input_data/praktikum/movies.dat";
+		Path p = new Path(fsUri + path);
 		try {
 		fs = FileSystem.get(new URI(fsUri), new Configuration());
 		FileStatus fStat = fs.getFileStatus(p);
@@ -31,7 +31,7 @@ public class HdfsOutput {
 		FSDataInputStream in = new FSDataInputStream(fs.open(p));
 		byte[] buffer = new byte[size];
 		in.readFully(buffer);
-		System.out.println(buffer);
+		System.out.println(new String(buffer));
 		} catch (Exception e){
 			System.out.println("Exception! ");
 			e.printStackTrace();
