@@ -1,14 +1,13 @@
 /**
  * 
  */
-import java.io.Console;
-import java.io.PrintWriter;
-import java.io.Writer;
 import java.net.URI;
-import java.net.URISyntaxException;
 
-import org.apache.hadoop.conf.*;
-import org.apache.hadoop.fs.*;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FSDataInputStream;
+import org.apache.hadoop.fs.FileStatus;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
 /**
  * @author Martin John
  *
