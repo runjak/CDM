@@ -39,6 +39,6 @@ public class DocFrequency extends MapReduceJobDriver
 	    job.setOutputValueClass(Text.class);
 	    job.setOutputFormat(TextOutputFormat.class);
 	    
-	    job.setCombinerClass(DocFrequencyReducer.class);
+	    job.setCombinerClass(DocFrequencyCombiner.class);
 	}
 }
