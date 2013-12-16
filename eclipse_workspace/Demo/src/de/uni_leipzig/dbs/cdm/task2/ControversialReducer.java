@@ -3,6 +3,7 @@ package de.uni_leipzig.dbs.cdm.task2;
 import java.io.IOException;
 import java.util.Iterator;
 
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapred.MapReduceBase;
@@ -16,7 +17,7 @@ import de.uni_leipzig.dbs.cdm.io.TextIntPair;
  * @author Jakob Runge
  * @since 2013-12-15
  * */
-public class ControversialReducer extends MapReduceBase implements Reducer<Text,TextIntPair,NullWritable,Text> {
+public class ControversialReducer extends MapReduceBase implements Reducer<IntWritable,TextIntPair,NullWritable,Text> {
 	/**
 	 * Since we don't use the output of this any further,
 	 * we use a NullWritable as outputKey.
@@ -29,7 +30,7 @@ public class ControversialReducer extends MapReduceBase implements Reducer<Text,
 	private static int n = 100;
 	
 	@Override
-	public void reduce(Text key, Iterator<TextIntPair> values,
+	public void reduce(IntWritable key, Iterator<TextIntPair> values,
 			OutputCollector<NullWritable, Text> collector, Reporter reporter)
 			throws IOException {
 		Text title = null;
@@ -49,5 +50,4 @@ public class ControversialReducer extends MapReduceBase implements Reducer<Text,
 			collector.collect(outputKey, outputValue);
 		}
 	}
-
 }
