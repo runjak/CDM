@@ -12,7 +12,11 @@ import de.uni_leipzig.dbs.cdm.submission.MapReduceJobDriver;
 /**
  * @author Jakob Runge
  * @since 2013-12-16
- * 1 Reducer: 25756212
+ * 1 Reducer: 001.25GB
+ * 2 Reducer: 640.17MB 641.12MB
+ * 4 Reducer: 314.60MB 325.57MB
+ * 8 Reducer: 149.46MB 168.80MB
+ *16 Reducer: 069.97MB 085.14MB
  * */
 public class Skew extends MapReduceJobDriver{
 	@Override
