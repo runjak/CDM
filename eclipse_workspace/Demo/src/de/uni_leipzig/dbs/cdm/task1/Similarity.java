@@ -3,6 +3,7 @@
  */
 package de.uni_leipzig.dbs.cdm.task1;
 
+import org.apache.hadoop.io.ArrayWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
@@ -38,7 +39,7 @@ public class Similarity extends MapReduceJobDriver {
 		
 	    job.setPartitionerClass(HashPartitioner.class);
         job.setOutputKeyComparatorClass(IntWritable.Comparator.class);
-        //job.setOutputValueGroupingComparator(IntWritable.Comparator.class);
+        job.setOutputValueGroupingComparator(Text.Comparator.class);
         
         
         job.setReducerClass(SimiliarityReducer.class);

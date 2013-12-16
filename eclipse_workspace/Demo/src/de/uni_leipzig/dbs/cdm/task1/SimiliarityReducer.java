@@ -36,27 +36,36 @@ public class SimiliarityReducer extends MapReduceBase implements
 			ValList.add(values.next());
 		}
 		while (ValList.size()>1){
-			Iterator<TextArrayWritable> iter = ValList.iterator();
-			Text[] tuples = findTuples(iter);
+			//Iterator<TextArrayWritable> iter = ValList.iterator();
+			//Text[] tuples = findTuples(iter);
+			Text[] tuples = findTuples(ValList);
 			ValList.poll();
 			for (Text t:tuples){
 				output.collect(null, t);
 			}
+			tuples.d
+			//iter = null;
 		}
 
 	}
 
-	private Text[] findTuples(Iterator<TextArrayWritable> iter) {
+	private Text[] findTuples(LinkedList<TextArrayWritable> inList){ //Iterator<TextArrayWritable> iter) {
 		// TODO Auto-generated method stub
 		ArrayList<Text> textList = new ArrayList<Text>();
 		TextArrayWritable peer = new TextArrayWritable();
 		Text[] outText;
+		String bTitle, pTitle;
+		Iterator<TextArrayWritable> iter = inList.iterator();
 		TextArrayWritable base = iter.next();
 		while (iter.hasNext()){
-			peer = iter.next(); 
+			peer = iter.next();
+			bTitle = base.toStrings()[0];
+			pTitle = peer.toStrings()[0];
+			if (!(bTitle.equals(pTitle))){
 			if (checkSim (base,peer)){
-				String s = (base.toStrings()[0] + "," + peer.toStrings()[0]);
+				String s = (bTitle + "," + pTitle);
 				textList.add(new Text(s));
+			}
 			}
 		}
 		outText = textList.toArray(new Text[textList.size()]);
@@ -70,7 +79,8 @@ public class SimiliarityReducer extends MapReduceBase implements
 		String[] sBase = base.toStrings();
 		String[] sPeer = peer.toStrings();
 //		sim(m1,m2) = (2·|genres(m1) ∩ genres(m2)|)/(|genres(m1)|+|genres(m2)|)
-		double s = ((2*(double)(StringHelper.numIntersect(sBase, sPeer)))/(double)(sBase.length + sPeer.length));
+		double s = ((2*(double)(StringHelper.numIntersect(sBase, sPeer)))/(double)(sBase.length-1 + sPeer.length-1));
+		if (Constants.TEST) System.out.println(sBase[0] + ":" + sPeer[0] + "=" + s);
 		if (s>Constants.SMIN) sim = true;
 		return sim;
 	}
