@@ -14,7 +14,7 @@ public class Patterns {
 	/**
 	 * Useful to parse the year from the title of a movies.dat file line
 	 * */
-	public static final Pattern yearPattern = Pattern.compile(".+\\(\\(d+)\\)");
+	public static final Pattern yearPattern = Pattern.compile(".+\\((\\d{4})\\)");
 	/**
 	 * Useful to parse a line from one of the r*.test files
 	 * */
