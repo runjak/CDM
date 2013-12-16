@@ -15,6 +15,11 @@ public final class Constants {
 	public static final int GMIN = 3;
 	
 	/**
+	 * Minimale Aehnlichkeit fuer Task 1
+	 */
+	public static final double SMIN = 0.5;
+	
+	/**
 	 * Minimalbewertung Task 2
 	 */
 	public static final int RMIN = 1;

@@ -16,6 +16,9 @@ import org.apache.hadoop.mapred.OutputCollector;
 import org.apache.hadoop.mapred.Reducer;
 import org.apache.hadoop.mapred.Reporter;
 
+import de.uni_leipzig.dbs.cdm.helper.Constants;
+import de.uni_leipzig.dbs.cdm.helper.StringHelper;
+
 /**
  * @author hadoop
  *
@@ -36,6 +39,9 @@ public class SimiliarityReducer extends MapReduceBase implements
 			Iterator<TextArrayWritable> iter = ValList.iterator();
 			Text[] tuples = findTuples(iter);
 			ValList.poll();
+			for (Text t:tuples){
+				output.collect(null, t);
+			}
 		}
 
 	}
@@ -61,7 +67,11 @@ public class SimiliarityReducer extends MapReduceBase implements
 		// TODO Auto-generated method stub
 		boolean sim = false;
 		//Schnittmenge der Genres vergleichen
-		
+		String[] sBase = base.toStrings();
+		String[] sPeer = peer.toStrings();
+//		sim(m1,m2) = (2·|genres(m1) ∩ genres(m2)|)/(|genres(m1)|+|genres(m2)|)
+		double s = ((2*(double)(StringHelper.numIntersect(sBase, sPeer)))/(double)(sBase.length + sPeer.length));
+		if (s>Constants.SMIN) sim = true;
 		return sim;
 	}
 

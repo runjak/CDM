@@ -31,14 +31,14 @@ public class Similarity extends MapReduceJobDriver {
 	protected void configureMapReduceJob(JobConf job)
 	{
 		job.setInputFormat(TextInputFormat.class);
-		job.setMapOutputKeyClass(Text.class);
-		job.setMapOutputValueClass(Text.class);
+		job.setMapOutputKeyClass(IntWritable.class);
+		job.setMapOutputValueClass(TextArrayWritable.class);
 		job.setMapperClass(SimilarityMapper.class);
 		
 		
 	    job.setPartitionerClass(HashPartitioner.class);
         job.setOutputKeyComparatorClass(IntWritable.Comparator.class);
-        job.setOutputValueGroupingComparator(IntWritable.Comparator.class);
+        //job.setOutputValueGroupingComparator(IntWritable.Comparator.class);
         
         
         job.setReducerClass(SimiliarityReducer.class);
