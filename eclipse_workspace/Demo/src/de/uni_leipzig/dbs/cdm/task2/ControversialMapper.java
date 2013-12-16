@@ -40,18 +40,17 @@ public class ControversialMapper extends MapReduceBase implements Mapper<LongWri
 			if(movieMatcher.matches()){
 				this.movieId.set(Integer.parseInt(movieMatcher.group(1)));
 				this.titleAndRating.setFirst(movieMatcher.group(2));
-				collector.collect(movieId, titleAndRating);
+				collector.collect(this.movieId, this.titleAndRating);
 			}
 		}else{
 			Matcher ratingMatcher = Patterns.ratingPattern.matcher(value.toString());
 			if(ratingMatcher.matches()){
 				this.movieId.set(Integer.parseInt(ratingMatcher.group(2)));
-				float rating = Float.parseFloat(ratingMatcher.group(3));
-				if(rating == 5 || rating == 1){
-					this.titleAndRating.setSecond(Math.round(rating));
-					collector.collect(movieId, titleAndRating);	
+				if(ratingMatcher.group(3).equals("5") || ratingMatcher.group(3).equals("1")){
+					this.titleAndRating.setSecond(Integer.parseInt(ratingMatcher.group(3)));
+					collector.collect(this.movieId, this.titleAndRating);
 				}
-			}
+			}	
 		}
 	}
 }
