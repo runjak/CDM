@@ -12,6 +12,8 @@ import org.apache.hadoop.mapred.Mapper;
 import org.apache.hadoop.mapred.OutputCollector;
 import org.apache.hadoop.mapred.Reporter;
 
+import de.uni_leipzig.dbs.cdm.helper.Patterns;
+
 /**
  * @author Jakob Runge
  * @since 2013-12-16
@@ -24,12 +26,12 @@ public class CountMapper extends MapReduceBase implements Mapper<LongWritable,Te
 			OutputCollector<NullWritable, IntWritable> collector, Reporter reporter)
 			throws IOException {
 		//Parsing the title
-		Matcher titleMatcher = CountYearMapper.titlePattern.matcher((CharSequence) value);
+		Matcher titleMatcher = Patterns.moviePattern.matcher((CharSequence) value);
 		if(!titleMatcher.matches()) return; // Chk that we've got a title
 		//Parsing the year
-		Matcher yearMatcher = CountYearMapper.yearPattern.matcher((CharSequence) titleMatcher.group(0));
+		Matcher yearMatcher = Patterns.yearPattern.matcher((CharSequence) titleMatcher.group(2));
 		if(!yearMatcher.matches()) return; // Chk that we've got a year
-		this.year.set(Integer.parseInt(yearMatcher.group(0)));
+		this.year.set(Integer.parseInt(yearMatcher.group(1)));
 		if(this.year.get() < CountYearMapper.jahr) return; // Chk that the year is big enough.
 		//Done :)
 		collector.collect(outputKey, year);

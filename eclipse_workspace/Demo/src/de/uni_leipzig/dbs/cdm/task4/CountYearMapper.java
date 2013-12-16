@@ -12,6 +12,8 @@ import org.apache.hadoop.mapred.Mapper;
 import org.apache.hadoop.mapred.OutputCollector;
 import org.apache.hadoop.mapred.Reporter;
 
+import de.uni_leipzig.dbs.cdm.helper.Patterns;
+
 /**
  * @author Jakob Runge
  * @since 2013-12-16
@@ -19,8 +21,6 @@ import org.apache.hadoop.mapred.Reporter;
  * We expect the count to be the first thing to map over.
  * */
 public class CountYearMapper extends MapReduceBase implements Mapper<LongWritable,Text,IntWritable,IntWritable>{
-	public static Pattern titlePattern = Pattern.compile("::(.+)::");
-	public static Pattern yearPattern = Pattern.compile(".+\\(\\(d+)\\)");
 	public static int jahr = 1980;
 
 	//It's notable, that the year is part of the title.
@@ -31,12 +31,12 @@ public class CountYearMapper extends MapReduceBase implements Mapper<LongWritabl
 			OutputCollector<IntWritable, IntWritable> collector, Reporter reporter)
 			throws IOException {
 		//Parsing the title:
-		Matcher titleMatcher = titlePattern.matcher((CharSequence) value);
+		Matcher titleMatcher = Patterns.moviePattern.matcher((CharSequence) value);
 		if(titleMatcher.matches()){
 			//Parsing the year
-			Matcher yearMatcher = yearPattern.matcher((CharSequence) titleMatcher.group(0));
+			Matcher yearMatcher = Patterns.yearPattern.matcher((CharSequence) titleMatcher.group(2));
 			if(!yearMatcher.matches()) return; // Chk that we've got a year
-			this.year.set(Integer.parseInt(yearMatcher.group(0)));
+			this.year.set(Integer.parseInt(yearMatcher.group(1)));
 			if(this.year.get() < jahr) return; // Chk that the year is big enough.
 			collector.collect(this.count, this.year);
 		}else{ // If we've got no title, we expect this to be the count.
