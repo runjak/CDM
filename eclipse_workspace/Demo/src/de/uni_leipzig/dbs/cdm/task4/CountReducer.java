@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapred.MapReduceBase;
 import org.apache.hadoop.mapred.OutputCollector;
 import org.apache.hadoop.mapred.Reducer;
@@ -13,21 +14,18 @@ import org.apache.hadoop.mapred.Reporter;
 /**
  * @author Jakob Runge
  * @since 2013-12-16
- * Simply counts the amount of values we've got.
  * */
-public class CountReducer extends MapReduceBase implements Reducer<NullWritable,IntWritable,NullWritable,IntWritable>{
+public class CountReducer extends MapReduceBase implements Reducer<IntWritable,IntWritable,NullWritable,Text>{
 	private NullWritable outputKey = NullWritable.get();
-	private IntWritable count = new IntWritable();
+	private Text outputValue = new Text();
 	@Override
-	public void reduce(NullWritable key, Iterator<IntWritable> values,
-			OutputCollector<NullWritable, IntWritable> collector, Reporter reporter)
+	public void reduce(IntWritable count, Iterator<IntWritable> years,
+			OutputCollector<NullWritable, Text> collector, Reporter reporter)
 			throws IOException {
-		int c = 0;
-		while(values.hasNext()){
-			c++;
-			values.next();
+		while(years.hasNext()){
+			IntWritable year = years.next();
+			this.outputValue.set(year+", "+count);
+			collector.collect(this.outputKey, this.outputValue);
 		}
-		this.count.set(c);
-		collector.collect(this.outputKey, this.count);
 	}
 }
