@@ -21,6 +21,11 @@ public class CountMapper extends MapReduceBase implements Mapper<LongWritable,Te
 	public void map(LongWritable key, Text value,
 			OutputCollector<IntWritable, IntWritable> collector, Reporter reporter)
 			throws IOException {
-		// TODO Auto-generated method stub
+		String[] vals = value.toString().split("\t");
+		if(vals.length == 2){
+			this.count.set(Integer.parseInt(vals[0]));
+			this.year.set(Integer.parseInt(vals[1]));
+			collector.collect(this.count, this.year);
+		}
 	}
 }
