@@ -45,9 +45,9 @@ public class ControversialReducer extends MapReduceBase implements Reducer<IntWr
 				maxRatings++;
 		}
 		//We only collect if we've got a title and min-/maxRatings satisfy n.
-		if(title != null && maxRatings >= n && minRatings >= n){
+//		if(title != null && maxRatings >= n && minRatings >= n){
 			outputValue.set("("+title+","+minRatings+","+maxRatings+")");
 			collector.collect(outputKey, outputValue);
-		}
+//		}
 	}
 }

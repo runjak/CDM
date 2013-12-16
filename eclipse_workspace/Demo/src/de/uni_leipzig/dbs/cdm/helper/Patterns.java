@@ -18,5 +18,5 @@ public class Patterns {
 	/**
 	 * Useful to parse a line from one of the r*.test files
 	 * */
-	public static final Pattern ratingPattern = Pattern.compile("^(\\d+)::(\\d+)::(\\d+)::(\\d+)$");
+	public static final Pattern ratingPattern = Pattern.compile("^(\\d+)::(\\d+)::(.+)::(\\d+)$");
 }

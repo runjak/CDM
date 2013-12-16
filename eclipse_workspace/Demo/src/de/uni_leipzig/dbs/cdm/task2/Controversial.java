@@ -25,11 +25,9 @@ public class Controversial extends MapReduceJobDriver {
 		job.setMapperClass(ControversialMapper.class);
 
 		job.setPartitionerClass(HashPartitioner.class);
-        job.setOutputKeyComparatorClass(Text.Comparator.class);
-        job.setOutputValueGroupingComparator(Text.Comparator.class);
+        job.setOutputKeyComparatorClass(IntWritable.Comparator.class);
+        job.setOutputValueGroupingComparator(TextIntPair.Comparator.class);
 //		job.setPartitionerClass(TextIntPair.FirstKeyPartitioner.class);
-//		job.setOutputKeyComparatorClass(TextIntPair.FirstComparator.class);
-//		job.setOutputValueGroupingComparator(TextIntPair.Comparator.class);
 		
 	    job.setReducerClass(ControversialReducer.class);
 		job.setOutputKeyClass(NullWritable.class);
