@@ -30,7 +30,7 @@ public class YearMapper extends MapReduceBase implements Mapper<LongWritable,Tex
 			Matcher yearMatcher = Patterns.yearPattern.matcher(movieMatcher.group(2));
 			if(yearMatcher.matches()){
 				int i = Integer.parseInt(yearMatcher.group(1));
-				if(i >= jahr){
+				if(i > jahr){
 					this.year.set(i);
 					collector.collect(this.year, this.one);	
 				}
