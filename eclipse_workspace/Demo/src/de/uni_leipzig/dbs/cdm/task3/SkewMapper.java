@@ -26,7 +26,7 @@ public class SkewMapper extends MapReduceBase implements Mapper<LongWritable,Tex
 			throws IOException {
 		Matcher movieMatcher = Patterns.moviePattern.matcher(value.toString());
 		if(movieMatcher.matches()){
-			this.outputKey = value;
+			this.outputKey = new Text(movieMatcher.group(2));
 			for(Text outputValue : this.outputValues){
 				collector.collect(outputKey, outputValue);
 			}

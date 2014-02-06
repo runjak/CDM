@@ -9,7 +9,7 @@ import de.uni_leipzig.dbs.cdm.helper.Patterns;
 
 public class SkewPartitioner extends Partitioner<Text, Text> {
 	public int getPartition(Text key, Text value, int nParts){
-		Matcher movieMatcher = Patterns.moviePattern.matcher(key.toString());
+		Matcher movieMatcher = Patterns.yearPattern.matcher(key.toString());
 		if(movieMatcher.matches()){
 			int year = Integer.parseInt(movieMatcher.group(1));
 			if(year <= 1993){
