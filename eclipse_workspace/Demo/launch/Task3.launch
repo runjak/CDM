@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.ui.externaltools.ProgramLaunchConfigurationType">
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="/opt/java/64/jdk1.6.0_45/bin/java"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="-jar Demo.jar &#10;&#10;de.uni_leipzig.dbs.cdm.task3.Skew&#10;  -Djob0.mapred.input.dir=/input_data/praktikum/movies.dat&#10;  -Djob0.mapred.output.dir=/output_data/task3&#10;&#10;-Dmapred.reduce.tasks=1&#10;-Dmapred.job.tracker=127.0.0.1:8020 &#10;-Dfs.default.name=hdfs://127.0.0.1:8019"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_WORKING_DIRECTORY" value="${workspace_loc:/Demo/dist}"/>
+</launchConfiguration>

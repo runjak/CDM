@@ -1,0 +1,7 @@
+.classpath
+.externalToolBuilders/
+.project
+.svn/
+bin/
+dist/
+lib/

@@ -1,0 +1,59 @@
+<project name="Demo" default="dist" basedir=".">
+
+	<property name="src" value="src"/>
+	<property name="lib" value="lib"/>
+	<property name="build" value=".bin"/>
+	<property name="targetFileName" value="${ant.project.name}.jar"/>
+
+	<!-- To run Hadoop jobs directly from eclipse we need to build a real jar and point the workflow manager to it. -->
+	<!-- See job.setJar() in WorkflowManager.java.  -->
+	<!-- This jar is built by an ant builder that is invoked automatically each time the project is build. -->
+	<property name="targetFile"  value="dist/${targetFileName}"/>
+	
+		
+	<path id="classpath">
+	  <fileset dir="${lib}">
+	    <include name="*.jar"/>
+	  </fileset>
+	</path>
+	
+	<pathconvert property="class-path" dirsep="/" pathsep=" " refid="classpath">
+	    <map from="${basedir}/lib" to="../lib" />
+	</pathconvert>
+
+	<target name="init">
+		<mkdir dir="${build}"/>
+		<delete includeEmptyDirs="true" failonerror="true" dir="${build}"/>
+		<mkdir dir="${build}"/>
+	</target>
+
+	<target name="compile" depends="init">
+	    <javac srcdir="${src}" destdir="${build}" includeAntRuntime="false" debug="on" debuglevel="lines,vars,source" target="1.6" source="1.6">
+	    	<classpath refid="classpath"/>
+	    </javac>
+		<copy toDir="${build}">
+			<fileset dir="${src}" excludes="**/*.java"/>
+		</copy>
+	</target>
+	
+	<target name="dist" depends="compile">
+		<jar destfile="${targetFile}">
+			<manifest>
+				<attribute name="Main-Class" value="de.uni_leipzig.dbs.cdm.submission.WorkflowManager"/>
+				<attribute name="Class-Path" value="${class-path}"/>
+			</manifest>
+			<fileset dir="${build}">
+				<include name="**"/>
+			</fileset>
+			<fileset dir="${basedir}">
+				<include name="${lib}/*.jar"/>
+				<!-- present at each Hadoop node -->
+				<exclude name="${lib}/hadoop-*.jar"/>
+				<exclude name="${lib}/commons-*.jar"/>
+				<exclude name="${lib}/jackson-*.jar"/>
+			</fileset>
+		</jar>
+		<delete includeEmptyDirs="true" failonerror="true" dir="${build}"/>
+	</target>
+	
+</project>
